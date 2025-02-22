@@ -1,47 +1,64 @@
 import * as api from './js/pixabay-api';
-import * as ai from './js/gemini-api';
 import * as render from './js/render-functions';
 
 const searchForm = document.querySelector('.search-form');
 const loader = document.querySelector('.loader-placeholder');
+const loadMore = document.querySelector('.load-more');
+let searchInputValue;
+const per_page = 40;
+let page = 1;
 
-searchForm.addEventListener('submit', event => {
+const loadPictures = async () => {
+  loader.classList.add('loader');
+  loadMore.classList.add('is-hidden');
+
+  try {
+    const response = await api.searchImage(searchInputValue, page, per_page);
+    console.log(response);
+
+    if (!response.data.hits.length) {
+      render.showError(
+        'Sorry, there are no images matching your search query. Please, try again!'
+      );
+      return;
+    }
+    render.showGallery(response.data.hits);
+    if (response.data.totalHits > page * per_page) {
+      loadMore.classList.remove('is-hidden');
+    } else {
+      render.showMessage(
+        "We're sorry, but you've reached the end of search results."
+      );
+    }
+  } catch (error) {
+    console.error('Error fetching images:', error);
+  } finally {
+    loader.classList.remove('loader');
+  }
+};
+
+searchForm.addEventListener('submit', async event => {
   event.preventDefault();
-  const form = event.target;
-  const searchInputValue = form.elements.input.value.trim();
-  if (searchInputValue === '') {
+  searchInputValue = event.target.elements.input.value.trim();
+
+  if (!searchInputValue) {
     render.showError('Please fill out this field');
     return;
   }
   render.clearGallery();
-  loader.classList.add('loader');
+  page = 1;
+  loadMore.classList.add('is-hidden');
+  loadPictures();
+});
 
-  let prompt = ai.pixabayPrompt(searchInputValue);
-
-  ai.askAI(prompt)
-    .then(response => {
-      let params = response.data.candidates[0].content.parts[0].text;
-      console.log(params);
-      api
-        .searchImage(params)
-        .then(response => {
-          console.log(response);
-          if (response.data.hits.length === 0) {
-            render.showError(
-              'Sorry, there are no images matching your search query. Please, try again!'
-            );
-            return;
-          }
-          render.showGallery(response.data.hits);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    })
-    .catch(error => {
-      console.log(error);
-    })
-    .finally(() => {
-      loader.classList.remove('loader');
-    });
+loadMore.addEventListener('click', async () => {
+  page += 1;
+  await loadPictures();
+  const galleryItemHeight = document
+    .querySelector('.gallery-item')
+    .getBoundingClientRect().height;
+  window.scrollBy({
+    top: galleryItemHeight * 2,
+    behavior: 'smooth',
+  });
 });

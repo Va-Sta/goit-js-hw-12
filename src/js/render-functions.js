@@ -9,6 +9,7 @@ let gallery = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
   captionDelay: 250,
 });
+
 export const showError = text => {
   iziToast.show({
     message: text,
@@ -20,6 +21,19 @@ export const showError = text => {
     progressBarColor: '#B51B1B',
   });
 };
+
+export const showMessage = text => {
+  iziToast.show({
+    message: text,
+    position: 'bottomCenter',
+    iconUrl: octagonIcon,
+    iconColor: '#FFFFFF',
+    backgroundColor: '#4e75ff',
+    messageColor: '#FFFFFF',
+    progressBarColor: '#4e75ff',
+  });
+};
+
 export const showGallery = images => {
   function imageTemplate({
     webformatURL,
@@ -60,7 +74,7 @@ export const showGallery = images => {
 </li>
 `;
   }
-  ulElem.innerHTML = images.map(imageTemplate).join('');
+  ulElem.innerHTML += images.map(imageTemplate).join('');
   gallery.refresh();
 };
 

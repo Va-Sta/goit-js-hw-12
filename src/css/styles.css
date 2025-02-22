@@ -10,6 +10,12 @@
 p {
   margin: 0;
 }
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .search-form {
   display: flex;
   align-items: center;
@@ -21,15 +27,14 @@ p {
   margin-bottom: 32px;
 }
 
-textarea#image-search {
+input#image-search {
   all: unset;
-  width: 450px;
-  /* height: 40px; */
+  width: 272px;
+  height: 40px;
   border: 1px solid #808080;
   border-radius: 4px;
   padding-left: 16px;
-  background: #fff;
-  color: #808080;
+  background-color: #fff;
   font-weight: 400;
   font-size: 16px;
   line-height: 1.5;
@@ -37,9 +42,14 @@ textarea#image-search {
   color: #808080;
 }
 
+input#image-search:focus {
+  background-color: #fff !important;
+  outline: none;
+  border-color: #4e75ff; /* Або колір, який тобі потрібен */
+}
+
 .search-btn {
   all: unset;
-  display: inline-block;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -56,6 +66,7 @@ textarea#image-search {
   letter-spacing: 0.04em;
   color: #fff;
 }
+
 /* _____________________________ Loader ______________________________ */
 
 .loader {
@@ -108,8 +119,8 @@ ol {
 body {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
+  /* align-items: flex-start;
+  justify-content: flex-start; */
 }
 
 .gallery {
@@ -119,7 +130,7 @@ body {
   justify-content: center;
   gap: 24px;
   width: 100%;
-  height: 648px;
+  /* min-height: 648px; */
   margin-top: 0px;
 }
 
@@ -160,4 +171,23 @@ body {
   line-height: 1.33;
   letter-spacing: 0.04em;
   color: #2e2f42;
+}
+
+.load-more {
+  box-sizing: border-box;
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  border-radius: 8px;
+  width: 125px;
+  height: 40px;
+  background: #4e75ff;
+  color: #fff;
+}
+
+.is-hidden {
+  display: none;
 }
