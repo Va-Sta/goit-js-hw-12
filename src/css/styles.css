@@ -1,9 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 * {
   box-sizing: border-box;
-}
-
-* {
   font-family: 'Montserrat', sans-serif;
 }
 
@@ -43,9 +40,21 @@ input#image-search {
 }
 
 input#image-search:focus {
-  background-color: #fff !important;
   outline: none;
-  border-color: #4e75ff; /* Або колір, який тобі потрібен */
+  border-color: #000000;
+}
+input#image-search:hover {
+  background-color: #fff;
+  outline: none;
+  border-color: #000000;
+  transition: all 0.3s ease;
+}
+input#image-search:active {
+  background-color: #fff;
+  outline: none;
+  color: #2e2f42;
+  border-color: #4e75ff;
+  transition: all 0.3s ease;
 }
 
 .search-btn {
@@ -65,6 +74,11 @@ input#image-search:focus {
   line-height: 1.5;
   letter-spacing: 0.04em;
   color: #fff;
+}
+
+.search-btn:hover {
+  background: #6c8cff;
+  transition: all 0.3s ease;
 }
 
 /* _____________________________ Loader ______________________________ */

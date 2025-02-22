@@ -35,16 +35,17 @@ export const showMessage = text => {
 };
 
 export const showGallery = images => {
-  function imageTemplate({
-    webformatURL,
-    largeImageURL,
-    tags,
-    likes,
-    views,
-    comments,
-    downloads,
-  }) {
-    return `
+  const markup = images
+    .map(
+      ({
+        webformatURL,
+        largeImageURL,
+        tags,
+        likes,
+        views,
+        comments,
+        downloads,
+      }) => `
 <li class="gallery-item">
   <a class="gallery-link" href="${largeImageURL}">
     <img
@@ -72,9 +73,11 @@ export const showGallery = images => {
   </div>
 </div>
 </li>
-`;
-  }
-  ulElem.innerHTML += images.map(imageTemplate).join('');
+`
+    )
+    .join('');
+
+  ulElem.insertAdjacentHTML('beforeend', markup);
   gallery.refresh();
 };
 

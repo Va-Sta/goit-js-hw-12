@@ -9,10 +9,9 @@ const per_page = 40;
 let page = 1;
 
 const loadPictures = async () => {
-  loader.classList.add('loader');
-  loadMore.classList.add('is-hidden');
-
   try {
+    loader.classList.add('loader');
+    loadMore.classList.add('is-hidden');
     const response = await api.searchImage(searchInputValue, page, per_page);
     console.log(response);
 
@@ -42,17 +41,15 @@ searchForm.addEventListener('submit', async event => {
   searchInputValue = event.target.elements.input.value.trim();
 
   if (!searchInputValue) {
-    render.showError('Please fill out this field');
-    return;
+    return render.showError('Please fill out this field');
   }
   render.clearGallery();
   page = 1;
-  loadMore.classList.add('is-hidden');
   loadPictures();
 });
 
 loadMore.addEventListener('click', async () => {
-  page += 1;
+  page++;
   await loadPictures();
   const galleryItemHeight = document
     .querySelector('.gallery-item')
